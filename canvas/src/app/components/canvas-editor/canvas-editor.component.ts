@@ -111,6 +111,7 @@ export class CanvasEditorComponent implements OnInit {
             this.canvas.add(img);
 
             this.imagesList.push({
+              id: new Date().getTime() + Number((Math.random() * 100).toFixed(0)),
               name: file.name,
               base64: imageReader.result,
               element: img
@@ -121,5 +122,10 @@ export class CanvasEditorComponent implements OnInit {
         // console.log(imageReader.result);
       };
     });
+  }
+
+  removeImage(image: any): void {
+    this.canvas.remove(image.element);
+    this.imagesList = this.imagesList.filter(img => img.id !== image.id);
   }
 }

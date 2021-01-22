@@ -9,7 +9,7 @@
     <h4>Zdjęcia</h4>
     <div class="image-section" *ngFor="let image of imagesList">
       <input class="image-input" disabled type="text" [value]="image.name">
-      <button class="btn btn-red image-btn">Usuń</button>
+      <button class="btn btn-red image-btn" (click)="removeImage(image)">Usuń</button>
     </div>
     <div class="image-section image-section-new">
       <input class="file" #file type="file" (change)="uploadImage($event)">
