@@ -10,9 +10,18 @@ $borderColor: #e4e4e4;
 }
 
 .container {
-  margin-left: 30px;
-  margin-top: 30px;
+  display: flex;
+  margin: 30px;
+}
+
+.container-left {
   width: 610px;
+}
+
+.container-right {
+  width: 300px;
+  margin-left: 70px;
+  margin-top: 50px;
 }
 
 .btn-container {
@@ -54,22 +63,41 @@ $borderColor: #e4e4e4;
   &.image-section-new {
     justify-content: flex-end;
   }
-
-  .image-input {
-    width: calc(100% - 100px);
-    height: 30px;
-    border: 1px solid;
-    border-color: $borderColor;
-    outline: none;
-    background: none;
-    box-shadow: none;
-    padding-left: 5px;
-    padding-right: 5px;
-  }
 }
 
 .file {
   width: 0;
   height: 0;
   visibility: hidden;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  label {
+    margin-bottom: 5px;
+    margin-left: 2px;
+    font-size: 14px;
+    color: gray;
+    font-weight: 100;
+  }
+}
+
+.input {
+  height: 35px;
+  border: 1px solid;
+  border-color: $borderColor;
+  outline: none;
+  background: none;
+  box-shadow: none;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 16px;
+
+  &.image-input {
+
+    width: calc(100% - 100px);
+  }
 }

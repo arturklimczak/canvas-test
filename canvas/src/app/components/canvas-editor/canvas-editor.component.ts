@@ -10,6 +10,8 @@ export class CanvasEditorComponent implements OnInit {
   canvas: any;
   initSVG: any;
   imagesList: any[] = [];
+  textList: any[] = [];
+  selectedText: any;
   @ViewChild('file') file: ElementRef | undefined;
 
   constructor() { }
@@ -57,7 +59,7 @@ export class CanvasEditorComponent implements OnInit {
       fontFamily: 'Roboto',
       fontWeight: 'bold',
       fontSize: 70,
-      top: 450,
+      top: 250,
       left: 10
     });
 
@@ -66,15 +68,42 @@ export class CanvasEditorComponent implements OnInit {
       fontWeight: 'normal',
       fill: '#c3bfbf',
       fontSize: 35,
-      top: 520,
+      top: 320,
       left: 10
     });
+
+    this.textList.push(text1, text2);
 
     this.canvas.add(priceText, priceText2, priceText3, priceText4, text1, text2);
     text1.bringToFront();
 
     this.initSVG = this.canvas.toSVG();
     console.log(this.initSVG);
+
+    this.canvas.on('selection:created', () => {
+      this.selectText();
+    });
+
+    this.canvas.on('selection:updated', () => {
+      this.selectText();
+    });
+
+    this.canvas.on('selection:cleared', () => {
+      this.selectText();
+    });
+  }
+
+  selectText(): void {
+    const obj = this.canvas.getActiveObject();
+
+    if (obj?.type === 'i-text') {
+      console.log(obj);
+      console.log(this.textList);
+      console.log(obj === this.textList[0]);
+      this.selectedText = obj;
+    } else {
+      this.selectedText = null;
+    }
   }
 
   exportSVG(): void {
