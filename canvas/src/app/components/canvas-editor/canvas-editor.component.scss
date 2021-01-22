@@ -26,10 +26,9 @@ $borderColor: #e4e4e4;
 
 .btn-container {
   display: flex;
-  margin-top: 50px;
+  margin-top: 20px;
   padding-top: 20px;
   justify-content: flex-end;
-  border-top: 1px solid $borderColor;
 }
 .btn {
   background-color: #1c802e;
@@ -41,11 +40,14 @@ $borderColor: #e4e4e4;
   cursor: pointer;
 
   &.btn-red {
-    background-color: #c84931;
+    background-color: rgb(240,31,50);
   }
 }
 
 .images-container {
+  border-bottom: 1px solid $borderColor;
+  padding-bottom: 30px;
+
   h4 {
     font-weight: normal;
     font-size: 16px;
@@ -62,6 +64,12 @@ $borderColor: #e4e4e4;
 
   &.image-section-new {
     justify-content: flex-end;
+  }
+
+  &.hidden {
+    width: 0;
+    height: 0;
+    visibility: hidden;
   }
 }
 

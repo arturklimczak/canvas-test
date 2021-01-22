@@ -6,6 +6,21 @@
       <canvas id="canvas" width="600" height="400"></canvas>
     </div>
     <div class="images-container">
+      <h4>Tło</h4>
+      <div class="image-section">
+        <input type="color" class="input" [(ngModel)]="backgroundColor" (change)="setBackgroundColor($event)">
+        <button class="btn btn-red image-btn" (click)="resetBackgroundColor()">Resetuj</button>
+      </div>
+      <div class="image-section" *ngIf="backgroundName">
+        <input class="input image-input" disabled type="text" [value]="backgroundName">
+        <button class="btn btn-red image-btn" (click)="resetBackground()">Usuń</button>
+      </div>
+      <div class="image-section image-section-new" [ngClass]="backgroundName ? 'hidden' : ''">
+        <input class="file" #fileBackground type="file" (change)="uploadImage($event, true)">
+        <button class="btn image-btn" (click)="selectBackground()">Dodaj tło</button>
+      </div>
+    </div>
+    <div class="images-container">
       <h4>Zdjęcia</h4>
       <div class="image-section" *ngFor="let image of imagesList">
         <input class="input image-input" disabled type="text" [value]="image.name">

@@ -12,7 +12,10 @@ export class CanvasEditorComponent implements OnInit {
   imagesList: any[] = [];
   textList: any[] = [];
   selectedText: any;
+  backgroundName = '';
+  backgroundColor = '#FFFFFF';
   @ViewChild('file') file: ElementRef | undefined;
+  @ViewChild('fileBackground') fileBackground: ElementRef | undefined;
 
   constructor() { }
 
@@ -25,7 +28,7 @@ export class CanvasEditorComponent implements OnInit {
       fontSize: 200,
       top: 20,
       left: 10,
-      fill: 'red'
+      fill: '#F01F32'
     });
 
     const priceText2 = new fabric.IText('99', {
@@ -34,7 +37,7 @@ export class CanvasEditorComponent implements OnInit {
       fontSize: 110,
       top: 30,
       left: 130,
-      fill: 'red'
+      fill: '#F01F32'
     });
 
     const priceText3 = new fabric.IText('2', {
@@ -55,7 +58,7 @@ export class CanvasEditorComponent implements OnInit {
       fill: '#c3bfbf'
     });
 
-    const text1 = new fabric.IText('Żywiec Saison', {
+    const text1 = new fabric.IText('Namysłów PILS', {
       fontFamily: 'Roboto',
       fontWeight: 'bold',
       fontSize: 70,
@@ -112,45 +115,57 @@ export class CanvasEditorComponent implements OnInit {
     // console.log('takie samo jak init?: ', svg === this.initSVG);
   }
 
+  selectBackground(): void {
+    this.fileBackground?.nativeElement.click();
+  }
+
   selectImage(): void {
-    // console.log(this.file);
-    // console.log(this.file?.nativeElement);
     this.file?.nativeElement.click();
   }
 
-  uploadImage(event: any): void {
+  uploadImage(event: any, background: boolean = false): void {
     Array.prototype.forEach.call(event?.target?.files, (file) => {
-      // console.log(file);
-
       const imageReader = new FileReader();
       imageReader.readAsDataURL(file);
       imageReader.onload = () => {
         if (typeof imageReader.result === 'string') {
-          fabric.Image.fromURL(imageReader.result, (img) => {
-            const widthToScale = 600 / (img.width || 600);
-            const heightToScale = 400 / (img.height || 400);
-            let scale = Math.min(widthToScale, heightToScale);
-            if (scale > 1) {
-              scale = 1;
-            }
-
-            img.set('left', 0);
-            img.set('top', 0);
-            img.scale(scale);
-            this.canvas.add(img);
-
-            this.imagesList.push({
-              id: new Date().getTime() + Number((Math.random() * 100).toFixed(0)),
-              name: file.name,
-              base64: imageReader.result,
-              element: img
-            });
-          });
+          if (background) {
+            this.setBackgroundImage(imageReader.result, file);
+          } else {
+            this.addImage(imageReader.result, file);
+          }
         }
-
-        // console.log(imageReader.result);
       };
     });
+  }
+
+  addImage(data: string, file: any): void {
+    fabric.Image.fromURL(data, (img) => {
+      const widthToScale = 600 / (img.width || 600);
+      const heightToScale = 400 / (img.height || 400);
+      let scale = Math.min(widthToScale, heightToScale);
+      if (scale > 1) {
+        scale = 1;
+      }
+
+      img.set('left', 0);
+      img.set('top', 0);
+      img.scale(scale);
+      this.canvas.add(img);
+
+      this.imagesList.push({
+        id: new Date().getTime() + Number((Math.random() * 100).toFixed(0)),
+        name: file.name,
+        base64: data,
+        element: img
+      });
+    });
+  }
+
+  setBackgroundImage(data: string, file: any): void {
+    console.log('??', data);
+    this.backgroundName = file.name;
+    this.canvas.setBackgroundImage(data, this.canvas.renderAll.bind(this.canvas));
   }
 
   removeImage(image: any): void {
@@ -159,11 +174,22 @@ export class CanvasEditorComponent implements OnInit {
   }
 
   updateText(event: any, parameter: string): void {
-    // console.log(parameter);
-    // console.log(event?.target?.value);
-    // console.log(this.selectedText.get(parameter));
     this.selectedText.set(parameter, event?.target?.value);
-    // console.log(this.selectedText.get(parameter));
     this.canvas.renderAll();
+  }
+
+  resetBackground(): void {
+    this.backgroundName = '';
+    this.canvas.setBackgroundImage(null, this.canvas.renderAll.bind(this.canvas));
+  }
+
+  setBackgroundColor(event: any): void {
+    const value = event.target.value;
+    this.canvas.setBackgroundColor(value, this.canvas.renderAll.bind(this.canvas));
+  }
+
+  resetBackgroundColor(): void {
+    this.backgroundColor = '#FFFFFF';
+    this.canvas.setBackgroundColor('#ffffff', this.canvas.renderAll.bind(this.canvas));
   }
 }
