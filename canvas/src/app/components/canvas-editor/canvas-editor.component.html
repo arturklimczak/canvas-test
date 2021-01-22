@@ -1,10 +1,23 @@
 
 
 
-
-<div class="custom-canvas-container">
-  <canvas id="canvas" width="800" height="600"></canvas>
+<div class="container">
+  <div class="custom-canvas-container">
+    <canvas id="canvas" width="600" height="400"></canvas>
+  </div>
+  <div class="images-container">
+    <h4>Zdjęcia</h4>
+    <div class="image-section" *ngFor="let image of imagesList">
+      <input class="image-input" disabled type="text" [value]="image.name">
+      <button class="btn btn-red image-btn">Usuń</button>
+    </div>
+    <div class="image-section image-section-new">
+      <input class="file" #file type="file" (change)="uploadImage($event)">
+      <button class="btn image-btn" (click)="selectImage()">Dodaj</button>
+    </div>
+  </div>
+  <div class="btn-container">
+    <button class="btn" (click)="exportSVG()">Eksportuj do SVG</button>
+  </div>
 </div>
-
-<button (click)="exportSVG()">Eksportuj do SVG</button>
 
