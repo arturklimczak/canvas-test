@@ -23,25 +23,25 @@
   <div class="container-right">
     <div class="text-details" *ngIf="selectedText">
       <div class="input-field">
-        <label for="fontfamily">
+        <label>
           Czcionka
         </label>
-        <select class="input" id="fontfamily" [value]="selectedText.get('fontFamily')">
+        <select class="input" id="fontfamily" [value]="selectedText.get('fontFamily')" (change)="updateText($event, 'fontFamily')">
           <option>Roboto</option>
           <option>Arial</option>
         </select>
       </div>
       <div class="input-field">
-        <label for="fontsize">
+        <label>
           Wielkość czcionki
         </label>
-        <input type="number" id="fontsize" class="input" [value]="selectedText.get('fontSize')">
+        <input type="number" id="fontsize" class="input" [value]="selectedText.get('fontSize')" (change)="updateText($event, 'fontSize')">
       </div>
       <div class="input-field">
-        <label for="color">
+        <label>
           Kolor
         </label>
-        <input type="color" id="color" [value]="selectedText.get('fill')">
+        <input type="color" id="color" [value]="selectedText.get('fill')" (change)="updateText($event, 'fill')">
       </div>
 
     </div>

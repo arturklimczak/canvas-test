@@ -78,7 +78,7 @@ export class CanvasEditorComponent implements OnInit {
     text1.bringToFront();
 
     this.initSVG = this.canvas.toSVG();
-    console.log(this.initSVG);
+    // console.log(this.initSVG);
 
     this.canvas.on('selection:created', () => {
       this.selectText();
@@ -97,9 +97,9 @@ export class CanvasEditorComponent implements OnInit {
     const obj = this.canvas.getActiveObject();
 
     if (obj?.type === 'i-text') {
-      console.log(obj);
-      console.log(this.textList);
-      console.log(obj === this.textList[0]);
+      // console.log(obj);
+      // console.log(this.textList);
+      // console.log(obj === this.textList[0]);
       this.selectedText = obj;
     } else {
       this.selectedText = null;
@@ -109,7 +109,7 @@ export class CanvasEditorComponent implements OnInit {
   exportSVG(): void {
     const svg = this.canvas.toSVG();
     console.log(svg);
-    console.log('takie samo jak init?: ', svg === this.initSVG);
+    // console.log('takie samo jak init?: ', svg === this.initSVG);
   }
 
   selectImage(): void {
@@ -156,5 +156,14 @@ export class CanvasEditorComponent implements OnInit {
   removeImage(image: any): void {
     this.canvas.remove(image.element);
     this.imagesList = this.imagesList.filter(img => img.id !== image.id);
+  }
+
+  updateText(event: any, parameter: string): void {
+    // console.log(parameter);
+    // console.log(event?.target?.value);
+    // console.log(this.selectedText.get(parameter));
+    this.selectedText.set(parameter, event?.target?.value);
+    // console.log(this.selectedText.get(parameter));
+    this.canvas.renderAll();
   }
 }
