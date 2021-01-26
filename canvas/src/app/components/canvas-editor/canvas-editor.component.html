@@ -16,14 +16,12 @@
         <div class="input-field input-field-font-size">
           <input type="number" id="fontsize" class="input" [value]="selectedText?.get('fontSize')" (change)="updateText($event, 'fontSize')">
         </div>
-        <div class="input-field">
-          <span class="material-icons">
-format_bold
-</span>
-          <select class="input" (change)="updateText($event, 'fontWeight')">
-            <option [value]="'normal'" [selected]="selectedText?.get('fontWeight') === 'normal'">Normalna</option>
-            <option [value]="'bold'" [selected]="selectedText?.get('fontWeight') === 'bold'">Pogrubiona</option>
-          </select>
+        <div class="input-field input-field-font-weight"
+             *ngFor="let fontIcon of fontIcons"
+        >
+          <span class="material-icons" [ngClass]="{'active': selectedText?.get(fontIcon.parameter) === fontIcon.activeValue}" (click)="updateText(selectedText?.get(fontIcon.parameter) === fontIcon.activeValue ? fontIcon.inactiveValue : fontIcon.activeValue, fontIcon.parameter)">
+            {{fontIcon.icon}}
+          </span>
         </div>
         <div class="input-field">
           <input type="color" class="input" id="color" [value]="selectedText?.get('fill')" (change)="updateText($event, 'fill')">

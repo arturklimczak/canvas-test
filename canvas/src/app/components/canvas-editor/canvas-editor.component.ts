@@ -14,12 +14,42 @@ export class CanvasEditorComponent implements OnInit {
   selectedText: any;
   backgroundName = '';
   backgroundColor = '#FFFFFF';
+  fontIcons: any[] = [
+    {
+      parameter: 'fontWeight',
+      icon: 'format_bold',
+      activeValue: 'bold',
+      inactiveValue: 'normal'
+    },
+    {
+      parameter: 'fontStyle',
+      icon: 'format_italic',
+      activeValue: 'italic',
+      inactiveValue: 'normal'
+    },
+    {
+      parameter: 'underline',
+      icon: 'format_underline',
+      activeValue: true,
+      inactiveValue: false
+    },
+    {
+      parameter: 'linethrough',
+      icon: 'format_strikethrough',
+      activeValue: true,
+      inactiveValue: false
+    },
+  ];
+
+  fontIconsList: string[] = [];
+
   @ViewChild('file') file: ElementRef | undefined;
   @ViewChild('fileBackground') fileBackground: ElementRef | undefined;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.fontIconsList = this.fontIcons.map(fontIcon => fontIcon.parameter);
     this.canvas = new fabric.Canvas('canvas');
 
     const priceText = new fabric.IText('2', {
@@ -61,6 +91,7 @@ export class CanvasEditorComponent implements OnInit {
     const text1 = new fabric.IText('Namysłów PILS', {
       fontFamily: 'Roboto',
       fontWeight: 'bold',
+      underline: false,
       fontSize: 70,
       top: 250,
       left: 10
@@ -174,15 +205,18 @@ export class CanvasEditorComponent implements OnInit {
   }
 
   updateText(event: any, parameter: string): void {
-    if (parameter === 'fontSize') {
+    const value = ['string', 'boolean'].includes(typeof(event)) ? event : event?.target?.value;
 
-      this.selectedText.set(parameter, event?.target?.value);
+    if (this.fontIconsList.includes(parameter)) {
+      // bug zwiazany z nieodswiezaniem w canvasie wielkosci czcionki underline itp.
+      this.selectedText.set(parameter, value);
       const color = this.selectedText.get('fill');
       this.selectedText.set('fill', color === '#c3bfbf' ? '#c3bfbd' : '#c3bfbf');
       this.selectedText.set('fill', color);
     } else {
-      this.selectedText.set(parameter, event?.target?.value);
+      this.selectedText.set(parameter, value);
     }
+
     this.canvas.renderAll();
   }
 

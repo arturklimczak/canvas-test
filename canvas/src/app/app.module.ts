@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { CanvasEditorComponent } from './components/canvas-editor/canvas-editor.component';
 import {FormsModule} from '@angular/forms';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
