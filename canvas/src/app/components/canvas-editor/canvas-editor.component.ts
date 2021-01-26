@@ -12,6 +12,7 @@ export class CanvasEditorComponent implements OnInit {
   imagesList: any[] = [];
   textList: any[] = [];
   selectedText: any;
+  selectedObject: any;
   backgroundName = '';
   backgroundColor = '#FFFFFF';
   fontIcons: any[] = [
@@ -51,6 +52,7 @@ export class CanvasEditorComponent implements OnInit {
   ngOnInit(): void {
     this.fontIconsList = this.fontIcons.map(fontIcon => fontIcon.parameter);
     this.canvas = new fabric.Canvas('canvas');
+    this.canvas.preserveObjectStacking = true;
 
     const priceText = new fabric.IText('2', {
       fontFamily: 'Roboto',
@@ -66,29 +68,29 @@ export class CanvasEditorComponent implements OnInit {
       fontWeight: 'bold',
       fontSize: 110,
       top: 30,
-      left: 130,
+      left: 120,
       fill: '#F01F32'
     });
 
     const priceText3 = new fabric.IText('2', {
       fontFamily: 'Roboto',
       fontWeight: 'bold',
-      fontSize: 50,
+      fontSize: 54,
       top: 140,
       left: 140,
       fill: '#c3bfbf'
     });
 
-    const priceText4 = new fabric.IText('99', {
+    const priceText4 = new fabric.IText('43', {
       fontFamily: 'Roboto',
       fontWeight: 'bold',
-      fontSize: 20,
-      top: 145,
+      fontSize: 26,
+      top: 143,
       left: 170,
       fill: '#c3bfbf'
     });
 
-    const text1 = new fabric.IText('Namysłów PILS', {
+    const text1 = new fabric.IText('Piwo', {
       fontFamily: 'Roboto',
       fontWeight: 'bold',
       underline: false,
@@ -97,7 +99,7 @@ export class CanvasEditorComponent implements OnInit {
       left: 10
     });
 
-    const text2 = new fabric.IText('piwo butelkowe 0,5l', {
+    const text2 = new fabric.IText('różne rodzaje, butelka 0,5l', {
       fontFamily: 'Arial',
       fontWeight: 'normal',
       fill: '#c3bfbf',
@@ -115,19 +117,19 @@ export class CanvasEditorComponent implements OnInit {
     // console.log(this.initSVG);
 
     this.canvas.on('selection:created', () => {
-      this.selectText();
+      this.selectObject();
     });
 
     this.canvas.on('selection:updated', () => {
-      this.selectText();
+      this.selectObject();
     });
 
     this.canvas.on('selection:cleared', () => {
-      this.selectText();
+      this.selectObject();
     });
   }
 
-  selectText(): void {
+  selectObject(): void {
     const obj = this.canvas.getActiveObject();
 
     if (obj?.type === 'i-text') {
@@ -138,6 +140,8 @@ export class CanvasEditorComponent implements OnInit {
     } else {
       this.selectedText = null;
     }
+
+    this.selectedObject = obj;
   }
 
   exportSVG(): void {
@@ -233,5 +237,17 @@ export class CanvasEditorComponent implements OnInit {
   resetBackgroundColor(): void {
     this.backgroundColor = '#FFFFFF';
     this.canvas.setBackgroundColor('#ffffff', this.canvas.renderAll.bind(this.canvas));
+  }
+
+  moveObject(top = true): void {
+    const object = this.canvas.getActiveObject();
+    if (top) {
+      object.bringToFront();
+    } else {
+
+      object.sendToBack();
+    }
+
+    this.canvas.renderAll();
   }
 }

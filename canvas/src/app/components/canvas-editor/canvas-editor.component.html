@@ -3,28 +3,68 @@
 <div class="container">
   <div class="container-left">
     <div class="custom-canvas-container">
-      <canvas id="canvas" width="600" height="400"></canvas>
+      <canvas id="canvas" width="700" height="400"></canvas>
     </div>
     <div class="images-container">
+      <h4 [ngClass]="{'hidden': !selectedText}">Ustawienia tekstu</h4>
       <div class="text-details">
-        <div class="input-field input-field-font-family">
-          <select class="input" id="fontfamily" [value]="selectedText?.get('fontFamily')" (change)="updateText($event, 'fontFamily')">
-            <option>Roboto</option>
-            <option>Arial</option>
-          </select>
+        <div class="text-details-content" [ngClass]="{'hidden': !selectedText}">
+          <!--  font family-->
+          <div class="input-field input-field-font-family">
+            <select class="input" id="fontfamily" [value]="selectedText?.get('fontFamily')" (change)="updateText($event, 'fontFamily')">
+              <option>Roboto</option>
+              <option>Arial</option>
+            </select>
+          </div>
+
+          <!--  font size-->
+          <div class="input-field input-field-font-size">
+            <input type="number" id="fontsize" class="input" [value]="selectedText?.get('fontSize')" (change)="updateText($event, 'fontSize')">
+          </div>
+
+          <!-- font bold italic underline -->
+          <div class="input-field input-field-font-icon"
+               *ngFor="let fontIcon of fontIcons"
+               (click)="updateText(selectedText?.get(fontIcon.parameter) === fontIcon.activeValue ? fontIcon.inactiveValue : fontIcon.activeValue, fontIcon.parameter)"
+          >
+            <span class="material-icons" [ngClass]="{'active': selectedText?.get(fontIcon.parameter) === fontIcon.activeValue}">
+              {{fontIcon.icon}}
+            </span>
+          </div>
+
+          <!-- font color-->
+          <div class="input-field">
+            <input type="color" class="input" id="color" [value]="selectedText?.get('fill')" (change)="updateText($event, 'fill')">
+          </div>
+
+          <div class="input-field-right">
+            <div class="input-field input-field-font-size">
+              <input type="number" class="input" [value]="selectedText?.get('strokeWidth')" (change)="updateText($event, 'strokeWidth')">
+            </div>
+
+            <div class="input-field">
+              <input type="color" class="input" [value]="selectedText?.get('stroke')" (change)="updateText($event, 'stroke')">
+            </div>
+
+            <span class="material-icons active">close</span>
+          </div>
+
+
         </div>
-        <div class="input-field input-field-font-size">
-          <input type="number" id="fontsize" class="input" [value]="selectedText?.get('fontSize')" (change)="updateText($event, 'fontSize')">
-        </div>
-        <div class="input-field input-field-font-weight"
-             *ngFor="let fontIcon of fontIcons"
-        >
-          <span class="material-icons" [ngClass]="{'active': selectedText?.get(fontIcon.parameter) === fontIcon.activeValue}" (click)="updateText(selectedText?.get(fontIcon.parameter) === fontIcon.activeValue ? fontIcon.inactiveValue : fontIcon.activeValue, fontIcon.parameter)">
-            {{fontIcon.icon}}
+      </div>
+      <div class="text-details-content">
+<!--        top / bottom-->
+        <div class="input-field-right w100"  [ngClass]="{'hidden': !selectedObject}">
+          <div class="input-field input-field-font-icon" (click)="moveObject(false)">
+          <span class="material-icons active">
+            vertical_align_bottom
           </span>
-        </div>
-        <div class="input-field">
-          <input type="color" class="input" id="color" [value]="selectedText?.get('fill')" (change)="updateText($event, 'fill')">
+          </div>
+          <div class="input-field input-field-font-icon" (click)="moveObject(true)">
+          <span class="material-icons active">
+            vertical_align_top
+          </span>
+          </div>
         </div>
 
       </div>
@@ -42,6 +82,10 @@
         <button class="btn image-btn" (click)="selectBackground()">Dodaj tło</button>
       </div>
     </div>
+
+
+  </div>
+  <div class="container-right">
     <div class="images-container">
       <h4>Zdjęcia</h4>
       <div class="image-section" *ngFor="let image of imagesList">
@@ -56,9 +100,6 @@
     <div class="btn-container">
       <button class="btn" (click)="exportSVG()">Eksportuj do SVG</button>
     </div>
-  </div>
-  <div class="container-right">
-
   </div>
 </div>
 
