@@ -100,12 +100,32 @@ $borderColor: #e4e4e4;
   outline: none;
   background: none;
   box-shadow: none;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 0 5px;
   font-size: 16px;
+  box-sizing: border-box;
 
   &.image-input {
 
     width: calc(100% - 100px);
   }
+}
+
+.text-details {
+  display: flex;
+
+  .input-field {
+    margin-right: 10px;
+  }
+}
+
+.font-family-field {
+  width: 200px;
+}
+
+.input-field-font-family {
+  width: 200px;
+}
+
+.input-field-font-size {
+  width: 50px;
 }

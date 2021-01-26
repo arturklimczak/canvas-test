@@ -174,7 +174,15 @@ export class CanvasEditorComponent implements OnInit {
   }
 
   updateText(event: any, parameter: string): void {
-    this.selectedText.set(parameter, event?.target?.value);
+    if (parameter === 'fontSize') {
+
+      this.selectedText.set(parameter, event?.target?.value);
+      const color = this.selectedText.get('fill');
+      this.selectedText.set('fill', color === '#c3bfbf' ? '#c3bfbd' : '#c3bfbf');
+      this.selectedText.set('fill', color);
+    } else {
+      this.selectedText.set(parameter, event?.target?.value);
+    }
     this.canvas.renderAll();
   }
 

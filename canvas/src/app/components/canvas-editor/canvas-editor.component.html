@@ -6,6 +6,30 @@
       <canvas id="canvas" width="600" height="400"></canvas>
     </div>
     <div class="images-container">
+      <div class="text-details">
+        <div class="input-field input-field-font-family">
+          <select class="input" id="fontfamily" [value]="selectedText?.get('fontFamily')" (change)="updateText($event, 'fontFamily')">
+            <option>Roboto</option>
+            <option>Arial</option>
+          </select>
+        </div>
+        <div class="input-field input-field-font-size">
+          <input type="number" id="fontsize" class="input" [value]="selectedText?.get('fontSize')" (change)="updateText($event, 'fontSize')">
+        </div>
+        <div class="input-field">
+          <span class="material-icons">
+format_bold
+</span>
+          <select class="input" (change)="updateText($event, 'fontWeight')">
+            <option [value]="'normal'" [selected]="selectedText?.get('fontWeight') === 'normal'">Normalna</option>
+            <option [value]="'bold'" [selected]="selectedText?.get('fontWeight') === 'bold'">Pogrubiona</option>
+          </select>
+        </div>
+        <div class="input-field">
+          <input type="color" class="input" id="color" [value]="selectedText?.get('fill')" (change)="updateText($event, 'fill')">
+        </div>
+
+      </div>
       <h4>Tło</h4>
       <div class="image-section">
         <input type="color" class="input" [(ngModel)]="backgroundColor" (change)="setBackgroundColor($event)">
@@ -36,30 +60,7 @@
     </div>
   </div>
   <div class="container-right">
-    <div class="text-details" *ngIf="selectedText">
-      <div class="input-field">
-        <label>
-          Czcionka
-        </label>
-        <select class="input" id="fontfamily" [value]="selectedText.get('fontFamily')" (change)="updateText($event, 'fontFamily')">
-          <option>Roboto</option>
-          <option>Arial</option>
-        </select>
-      </div>
-      <div class="input-field">
-        <label>
-          Wielkość czcionki
-        </label>
-        <input type="number" id="fontsize" class="input" [value]="selectedText.get('fontSize')" (change)="updateText($event, 'fontSize')">
-      </div>
-      <div class="input-field">
-        <label>
-          Kolor
-        </label>
-        <input type="color" id="color" [value]="selectedText.get('fill')" (change)="updateText($event, 'fill')">
-      </div>
 
-    </div>
   </div>
 </div>
 
