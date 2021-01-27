@@ -32,14 +32,6 @@ $borderColor: #e4e4e4;
   margin-top: 20px;
   padding-top: 20px;
   justify-content: center;
-
-  .btn {
-
-    height: 50px;
-    width: 300px;
-    font-size: 16px;
-    text-transform: uppercase;
-  }
 }
 .btn {
   background-color: #1c802e;
@@ -52,6 +44,13 @@ $borderColor: #e4e4e4;
 
   &.btn-red {
     background-color: rgb(240,31,50);
+  }
+
+  &.btn-big {
+    height: 50px;
+    width: 300px;
+    font-size: 16px;
+    text-transform: uppercase;
   }
 }
 

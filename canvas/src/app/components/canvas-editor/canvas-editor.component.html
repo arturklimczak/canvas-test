@@ -13,6 +13,7 @@
           <div class="input-field input-field-font-family">
             <select class="input" id="fontfamily" [value]="selectedText?.get('fontFamily')" (change)="updateText($event, 'fontFamily')">
               <option>Roboto</option>
+              <option>Montserrat</option>
               <option>Arial</option>
             </select>
           </div>
@@ -97,8 +98,13 @@
         <button class="btn image-btn" (click)="selectImage()">Dodaj</button>
       </div>
     </div>
-    <div class="btn-container">
-      <button class="btn" (click)="exportSVG()">Eksportuj do SVG</button>
+    <div>
+      <div class="btn-container">
+        <button class="btn btn-big" (click)="exportSVG()">Eksportuj do SVG</button>
+      </div>
+      <div class="btn-container">
+        <button class="btn" (click)="exportJSON()">Eksportuj do JSON</button>
+      </div>
     </div>
   </div>
 </div>

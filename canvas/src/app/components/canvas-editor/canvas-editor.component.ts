@@ -1,5 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { fabric } from 'fabric';
+import {sampleJson, sampleJson2} from '../sampleJson';
+import {sampleSvg} from '../sampleSvg';
+import {sample} from 'rxjs/operators';
 
 @Component({
   selector: 'app-canvas-editor',
@@ -51,8 +54,16 @@ export class CanvasEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.fontIconsList = this.fontIcons.map(fontIcon => fontIcon.parameter);
+    this.fontIconsList.push('fontFamily');
     this.canvas = new fabric.Canvas('canvas');
     this.canvas.preserveObjectStacking = true;
+
+
+    // wczytanie starej wersji
+    // this.canvas.loadFromJSON(sampleJson2,
+    //   () => {
+    //     this.canvas.renderAll();
+    // });
 
     const priceText = new fabric.IText('2', {
       fontFamily: 'Roboto',
@@ -60,7 +71,7 @@ export class CanvasEditorComponent implements OnInit {
       fontSize: 200,
       top: 20,
       left: 10,
-      fill: '#F01F32'
+      fill: '#F01F32',
     });
 
     const priceText2 = new fabric.IText('99', {
@@ -96,7 +107,8 @@ export class CanvasEditorComponent implements OnInit {
       underline: false,
       fontSize: 70,
       top: 250,
-      left: 10
+      left: 10,
+      backgroundColor: 'rgba(255,255,255,0.3)'
     });
 
     const text2 = new fabric.IText('różne rodzaje, butelka 0,5l', {
@@ -105,7 +117,8 @@ export class CanvasEditorComponent implements OnInit {
       fill: '#c3bfbf',
       fontSize: 35,
       top: 320,
-      left: 10
+      left: 10,
+      backgroundColor: 'rgba(255,255,255,0.3)'
     });
 
     this.textList.push(text1, text2);
@@ -147,7 +160,12 @@ export class CanvasEditorComponent implements OnInit {
   exportSVG(): void {
     const svg = this.canvas.toSVG();
     console.log(svg);
-    // console.log('takie samo jak init?: ', svg === this.initSVG);
+  }
+
+  exportJSON(): void {
+    const json = this.canvas.toJSON();
+    // console.log(json);
+    console.log(JSON.stringify(json));
   }
 
   selectBackground(): void {
