@@ -108,7 +108,6 @@ export class CanvasEditorComponent implements OnInit {
       fontSize: 70,
       top: 250,
       left: 10,
-      backgroundColor: 'rgba(255,255,255,0.3)'
     });
 
     const text2 = new fabric.IText('różne rodzaje, butelka 0,5l', {
@@ -118,7 +117,6 @@ export class CanvasEditorComponent implements OnInit {
       fontSize: 35,
       top: 320,
       left: 10,
-      backgroundColor: 'rgba(255,255,255,0.3)'
     });
 
     this.textList.push(text1, text2);
